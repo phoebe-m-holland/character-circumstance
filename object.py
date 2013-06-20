@@ -6,12 +6,12 @@ import rsvg
 WIDTH, HEIGHT = 256, 384
 FONTNAME = "Sans"
 
-def MakeObjectCard (objectNameAndDescription):
-    with open(objectNameAndDescription[0]+"Card.svg", 'w') as output:
+def MakeObjectCard (obj):
+    with open("Cards/Objects/"+obj[0]+".svg", 'w') as output:
         surface = cairo.SVGSurface (output, WIDTH, HEIGHT)
         context = cairo.Context(surface)
 
-        inputsvg = "Objects/"+objectNameAndDescription[0]+".svg"
+        inputsvg = "Objects/"+obj[0]+".svg"
         print inputsvg
         handle = rsvg.Handle(file=inputsvg)
         
@@ -22,7 +22,7 @@ def MakeObjectCard (objectNameAndDescription):
         layout = pangocairo_context.create_layout()
         font = pango.FontDescription(FONTNAME + " 25")
         layout.set_font_description(font)
-        layout.set_text(objectNameAndDescription[0])
+        layout.set_text(obj[0])
         context.set_source_rgb(0, 0, 0)
         pangocairo_context.update_layout(layout)
         pangocairo_context.show_layout(layout)
@@ -30,7 +30,7 @@ def MakeObjectCard (objectNameAndDescription):
         context.translate(0, 256)
         font = pango.FontDescription(FONTNAME + " 18")
         layout.set_font_description(font)
-        layout.set_text(objectNameAndDescription[1])
+        layout.set_text(obj[1])
         context.set_source_rgb(0.01,0.01,0.01)
         pangocairo_context.update_layout(layout)
         pangocairo_context.show_layout(layout)
