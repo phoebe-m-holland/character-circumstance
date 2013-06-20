@@ -18,15 +18,15 @@ class Card:
             context = cairo.Context(surface)
             handle = rsvg.Handle(file=im)
             self.printText(context, title, self.title_y)
-            self.printText(context, description, self.description_y)
+            self.printText(context, description, self.description_y, 18)
             surface.finish()
 
-    def printText(self, context, text, y_offset):
+    def printText(self, context, text, y_offset, size=25):
         context.move_to(self.width/2, y_offset)
         pangocairo_context = pangocairo.CairoContext(context)
 #        pangocairo_context.set_antialias(cairo.ANTIALIAS_SUBPIXEL)
         layout = pangocairo_context.create_layout()
-        font = pango.FontDescription(self.font + " 25")
+        font = pango.FontDescription(self.font + " " + str(size))
         layout.set_font_description(font)
         layout.set_text(text)
         context.set_source_rgb(0, 0, 0)
