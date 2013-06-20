@@ -1,7 +1,9 @@
-1) Refactor everything that exists so far
-2) Figure out how to center text
-3) Figure out how to add second section of text in Pango
-4) Figure out how to add SVGs.
-5) Refactor object as class of card that has SVGs according to name in correct place, etc.
-6) Make other object types.
-7) Backgrounds: png or svg?
+TEXT:
+1) Make text occupy full space, not split up among lots of lines.
+2) Custom font that is more interesting?
+3) Coloring?
+
+IMAGES:
+1) Figure out how to add SVGs.
+2) Add images to objects (in corners).
+3) Make other card types.
