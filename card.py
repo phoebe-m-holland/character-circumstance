@@ -6,7 +6,7 @@ import rsvg
 class Card:
     width, height = 256, 384
     font = "Sans"
-
+    x_border = 16
     title_y = 128
     description_y = 256
 
@@ -18,16 +18,20 @@ class Card:
             context = cairo.Context(surface)
             handle = rsvg.Handle(file=im)
             self.printText(context, title, self.title_y)
-            self.printText(context, description, self.description_y, 18)
+            self.printText(context, description, self.description_y, 9)
             surface.finish()
 
-    def printText(self, context, text, y_offset, size=25):
+    def drawBorder(self):
+        cairo_new_sub_path
+
+    def printText(self, context, text, y_offset, size=18):
         context.move_to(self.width/2, y_offset)
         pangocairo_context = pangocairo.CairoContext(context)
-#        pangocairo_context.set_antialias(cairo.ANTIALIAS_SUBPIXEL)
         layout = pangocairo_context.create_layout()
         font = pango.FontDescription(self.font + " " + str(size))
         layout.set_font_description(font)
+        layout.set_width(self.width - self.x_border)
+        layout.set_alignment(pango.ALIGN_CENTER)
         layout.set_text(text)
         context.set_source_rgb(0, 0, 0)
         pangocairo_context.update_layout(layout)
