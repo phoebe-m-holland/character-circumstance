@@ -34,18 +34,21 @@ class Card:
         context.stroke()
 
     def drawText(self, surface, text, y_offset, size=18):
-        context = cairo.Context(surface)
-        context.translate(self.width/2, y_offset)
-        pangocairo_context = pangocairo.CairoContext(context)
-        layout = pangocairo_context.create_layout()
         font = pango.FontDescription(self.font + " " + str(size))
+        context = cairo.Context(surface)
+        context.set_source_rgb(0, 0, 0)
+        context.translate(self.width / 10, y_offset)
+       
+        pangocontext = pangocairo.CairoContext(context)
+        layout = pangocontext.create_layout()
         layout.set_font_description(font)
-        layout.set_width((self.width - self.border) * 2)
+
+        layout.set_width(self.width * pango.SCALE * 4 / 5 )
         layout.set_alignment(pango.ALIGN_CENTER)
         layout.set_text(text)
-        context.set_source_rgb(0, 0, 0)
-        pangocairo_context.update_layout(layout)
-        pangocairo_context.show_layout(layout)
+        print layout.get_size()
+        pangocontext.update_layout(layout)
+        pangocontext.show_layout(layout)
 
     def drawImage(self, surface, svg): 
         pass 
