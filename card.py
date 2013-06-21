@@ -6,6 +6,7 @@ import pangocairo
 import rsvg
 
 from math import pi
+from itertools import count
 
 class Card:
     width, height = 256, 384
@@ -14,17 +15,16 @@ class Card:
 
     def __init__(self, title, description):
         im = "Input/" + self.prefix + title + ".svg"
-        out = "Output/" + self.prefix + title + ".svg"
-        with open(out, 'w') as output:
-            surface = cairo.SVGSurface(output, self.width, self.height)
-            self.drawBorder(surface)
-            if description != "":
-                self.drawText(surface, title, self.height / 2.5, 12)
-                self.drawText(surface, description, self.height / 2, 8)
-            else:
-                self.drawText(surface, title, self.height / 2.25, 13)
-            self.drawImage(surface, self.loadSVG(im))
-            surface.finish()
+        surface = cairo.PDFSurface(None, self.width, self.height)
+        self.drawBorder(surface)
+        if description != "":
+            self.drawText(surface, title, self.height / 2.5, 12)
+            self.drawText(surface, description, self.height / 2, 8)
+        else:
+            self.drawText(surface, title, self.height / 2.25, 13)
+        self.drawImage(surface, self.loadSVG(im))
+        self.surface = surface
+
 
     def drawBorder(self, surface):
         context = cairo.Context(surface)
@@ -74,11 +74,24 @@ class Object(Card):
             svg.render_cairo(context)            
     
 
-def ReadList(name, cardType):
-    with open(name) as ls:
-        for line in ls:
+def CardSheet(ls, cardType):
+    cards = []
+    with open("Input/Lists/" + ls + ".list") as lines:
+        for line in lines:
             title, description = (l.strip() for l in line.split(":"))
-            cardType(title, description)
+            cards.append(cardType(title, description))
+    with open("Output/" + ls + ".pdf", 'w') as output:
+        surface = cairo.PDFSurface(output, 4 * Card.width, 4 * Card.height)
+        context = cairo.Context(surface)
+        for i in count():
+            if i < cards.__len__():
+                context.set_source_surface(cards[i].surface, Card.width * i % 4, Card.height * i / 4)
+                context.rectangle(Card.width * i % 4, Card.height * i / 4, Card.width, Card.height)
+                context.fill()
+            else:
+                break
+        surface.finish()
+
 
 if __name__ == "__main__":
-    ReadList("Input/Lists/objects.list", Object)
+    CardSheet("objects", Object)
