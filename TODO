@@ -1,9 +1,4 @@
-TEXT:
 1) Make text occupy full space, not split up among lots of lines.
 2) Custom font that is more interesting?
 3) Coloring?
-
-IMAGES:
-1) Figure out how to add SVGs.
-2) Add images to objects (in corners).
-3) Make other card types.
+4) Make other card types.
