@@ -3,6 +3,8 @@ import pango
 import pangocairo
 import rsvg
 
+from math import pi
+
 class Card:
     width, height = 256, 384
     font = "Sans"
@@ -58,12 +60,16 @@ class Card:
 class Object(Card):
     prefix = "Objects/"
     def drawImage(self, surface, svg):
-        context = cairo.Context(surface)
         if svg != None:
-            indent = self.width / 10
-            context.translate(indent, indent)
+            context = cairo.Context(surface)
             context.scale(0.2, 0.2)
+            context.translate(self.width / 2, self.height / 2)
             svg.render_cairo(context)
+            context.translate(self.width * 4, self.height * 4)
+            context.rotate(pi)
+            svg.render_cairo(context)
+            
+            
             
 
 def ReadList(name, cardType):
