@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import cairo
 import pango
 import pangocairo
@@ -78,3 +80,6 @@ def ReadList(name, cardType):
         for line in ls:
             title, description = (l.strip() for l in line.split(":"))
             cardType(title, description)
+
+if __name__ == "__main__":
+    ReadList("Input/Lists/objects.list", Object)
