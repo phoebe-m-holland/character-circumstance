@@ -19,10 +19,10 @@ class Card:
             surface = cairo.SVGSurface(output, self.width, self.height)
             self.drawBorder(surface)
             if description != "":
-                self.drawText(surface, title, self.height / 3)
+                self.drawText(surface, title, self.height / 2.5)
                 self.drawText(surface, description, self.height / 2, 9)
             else:
-                self.drawText(surface, title, self.height / 2)
+                self.drawText(surface, title, self.height / 2.25)
             self.drawImage(surface, self.loadSVG(im))
             surface.finish()
 
