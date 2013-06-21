@@ -5,23 +5,23 @@ import pango
 import pangocairo
 import rsvg
 
-from math import pi
+from math import pi, sqrt
 from itertools import count
 
 class Card:
-    width, height = 256, 384
+    width, height = 1024, 1536
     font = "URW Palladio L, Roman"
-    border = 4
+    border = width / 32
 
     def __init__(self, title, description):
         im = "Input/" + self.prefix + title + ".svg"
         surface = cairo.PDFSurface(None, self.width, self.height)
         self.drawBorder(surface)
         if description != "":
-            self.drawText(surface, title, self.height / 2.5, 12)
-            self.drawText(surface, description, self.height / 2, 8)
+            self.drawText(surface, title, self.height / 2.5, self.width/16)
+            self.drawText(surface, description, self.height / 2, self.width/24 )
         else:
-            self.drawText(surface, title, self.height / 2.25, 13)
+            self.drawText(surface, title, self.height / 2.25, 34)
         self.drawImage(surface, self.loadSVG(im))
         self.surface = surface
 
@@ -66,10 +66,10 @@ class Object(Card):
     def drawImage(self, surface, svg):
         if svg != None:
             context = cairo.Context(surface)
-            context.scale(0.2, 0.2)
-            context.translate(self.width / 2, self.height / 2)
+            context.scale(0.6, 0.6)
+            context.translate(self.width / 6, self.height / 6)
             svg.render_cairo(context)
-            context.translate(self.width * 4, self.height * 4)
+            context.translate(self.width*4/3, self.height*4/3)
             context.rotate(pi)
             svg.render_cairo(context)            
     
