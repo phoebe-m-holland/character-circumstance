@@ -19,7 +19,7 @@ class Card:
             self.drawBorder(context)
             self.drawText(context, title, self.title_y)
             self.drawText(context, description, self.description_y, 9)
-            self.drawImage(context, im)
+            self.drawImage(context, self.loadSVG(im))
             surface.finish()
 
     def drawBorder(self, context):
@@ -43,13 +43,18 @@ class Card:
         pangocairo_context.update_layout(layout)
         pangocairo_context.show_layout(layout)
 
-    def drawImage(self, context, svg_name):
-        try:
-            svg = rsvg.Handle(file=svg_name)
+    def drawImage(self, context, svg): 
+        if svg != None:
+            indent = self.border * 2
+            context.move_to(indent, indent)
             svg.render_cairo(context)
+   
+    def loadSVG(self, svg_name):
+        try:
+            return rsvg.Handle(file=svg_name)
         except:
-            print "GError processing " + svg_name
-
+            print "error processing " + svg_name
+            return None
 
 class Object(Card):
     prefix = "Objects/"
