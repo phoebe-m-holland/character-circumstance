@@ -10,7 +10,7 @@ from itertools import count
 
 class Card:
     width, height = 256, 384
-    font = "Sans"
+    font = "URW Palladio L, Roman"
     border = 4
 
     def __init__(self, title, description):
