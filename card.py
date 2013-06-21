@@ -19,10 +19,10 @@ class Card:
             surface = cairo.SVGSurface(output, self.width, self.height)
             self.drawBorder(surface)
             if description != "":
-                self.drawText(surface, title, self.height / 2.5)
-                self.drawText(surface, description, self.height / 2, 9)
+                self.drawText(surface, title, self.height / 2.5, 12)
+                self.drawText(surface, description, self.height / 2, 8)
             else:
-                self.drawText(surface, title, self.height / 2.25)
+                self.drawText(surface, title, self.height / 2.25, 13)
             self.drawImage(surface, self.loadSVG(im))
             surface.finish()
 
@@ -35,7 +35,7 @@ class Card:
         context.set_line_join(cairo.LINE_JOIN_ROUND)
         context.stroke()
 
-    def drawText(self, surface, text, y_offset, size=18):
+    def drawText(self, surface, text, y_offset, size):
         font = pango.FontDescription(self.font + " " + str(size))
         context = cairo.Context(surface)
         context.set_source_rgb(0, 0, 0)
