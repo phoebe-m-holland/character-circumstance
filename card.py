@@ -87,10 +87,12 @@ def CardSheet(ls, cardType):
             if i < cards.__len__():
                 context.set_source_surface(cards[i].surface,
                                            Card.width * (i % 4),
-                                           Card.height * (i / 4))
+                                           Card.height * ((i / 4) % 4))
                 context.rectangle(Card.width * (i % 4),
-                                  Card.height * (i / 4),
+                                  Card.height * ((i / 4) % 4) ,
                                   Card.width, Card.height)
+                if (i > 0) and not (i % 16):
+                    context.show_page()
                 context.fill()
             else:
                 break
