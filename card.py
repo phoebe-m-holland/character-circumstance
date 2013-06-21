@@ -7,22 +7,23 @@ class Card:
     width, height = 256, 384
     font = "Sans"
     border = 4
-    title_y = 128
-    description_y = 192
 
     def __init__(self, title, description):
         im = "Input/" + self.prefix + title + ".svg"
         out = "Output/" + self.prefix + title + ".svg"
         with open(out, 'w') as output:
             surface = cairo.SVGSurface(output, self.width, self.height)
-            context = cairo.Context(surface)
-            self.drawBorder(context)
-            self.drawText(context, title, self.title_y)
-            self.drawText(context, description, self.description_y, 9)
-            self.drawImage(context, self.loadSVG(im))
+            self.drawBorder(surface)
+            if description != "":
+                self.drawText(surface, title, self.height / 3)
+                self.drawText(surface, description, self.height / 2, 9)
+            else:
+                self.drawText(surface, title, self.height / 2)
+            self.drawImage(surface, self.loadSVG(im))
             surface.finish()
 
-    def drawBorder(self, context):
+    def drawBorder(self, surface):
+        context = cairo.Context(surface)
         context.rectangle(self.border/2, self.border/2,
                           self.width - 2 * self.border,
                           self.height - 2 * self.border)
@@ -30,7 +31,8 @@ class Card:
         context.set_line_join(cairo.LINE_JOIN_ROUND)
         context.stroke()
 
-    def drawText(self, context, text, y_offset, size=18):
+    def drawText(self, surface, text, y_offset, size=18):
+        context = cairo.Context(surface)
         context.move_to(self.width/2, y_offset)
         pangocairo_context = pangocairo.CairoContext(context)
         layout = pangocairo_context.create_layout()
@@ -43,7 +45,7 @@ class Card:
         pangocairo_context.update_layout(layout)
         pangocairo_context.show_layout(layout)
 
-    def drawImage(self, context, svg): 
+    def drawImage(self, surface, svg): 
         pass 
 
     def loadSVG(self, svg_name):
@@ -55,10 +57,11 @@ class Card:
 
 class Object(Card):
     prefix = "Objects/"
-    def drawImage(self, context, svg):
+    def drawImage(self, surface, svg):
+        context = cairo.Context(surface)
         if svg != None:
-            indent = self.border * 2
-            context.move_to(indent, indent)
+            indent = self.width / 10
+            context.translate(indent, indent)
             context.scale(0.2, 0.2)
             svg.render_cairo(context)
             
@@ -66,6 +69,5 @@ class Object(Card):
 def ReadList(name, cardType):
     with open(name) as ls:
         for line in ls:
-            title, description = line.split(":")
+            title, description = (l.strip() for l in line.split(":"))
             cardType(title, description)
-
