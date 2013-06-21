@@ -44,11 +44,8 @@ class Card:
         pangocairo_context.show_layout(layout)
 
     def drawImage(self, context, svg): 
-        if svg != None:
-            indent = self.border * 2
-            context.move_to(indent, indent)
-            svg.render_cairo(context)
-   
+        pass 
+
     def loadSVG(self, svg_name):
         try:
             return rsvg.Handle(file=svg_name)
@@ -58,6 +55,13 @@ class Card:
 
 class Object(Card):
     prefix = "Objects/"
+    def drawImage(self, context, svg):
+        if svg != None:
+            indent = self.border * 2
+            context.move_to(indent, indent)
+            context.scale(0.2, 0.2)
+            svg.render_cairo(context)
+            
 
 def ReadList(name, cardType):
     with open(name) as ls:
