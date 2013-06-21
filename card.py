@@ -85,8 +85,12 @@ def CardSheet(ls, cardType):
         context = cairo.Context(surface)
         for i in count():
             if i < cards.__len__():
-                context.set_source_surface(cards[i].surface, Card.width * i % 4, Card.height * i / 4)
-                context.rectangle(Card.width * i % 4, Card.height * i / 4, Card.width, Card.height)
+                context.set_source_surface(cards[i].surface,
+                                           Card.width * i % 4,
+                                           Card.height * i / 4)
+                context.rectangle(Card.width * (i % 4),
+                                  Card.height * (i / 4),
+                                  Card.width, Card.height)
                 context.fill()
             else:
                 break
