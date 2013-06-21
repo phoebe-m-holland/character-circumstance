@@ -101,3 +101,4 @@ def CardSheet(ls, cardType):
 
 if __name__ == "__main__":
     CardSheet("objects", Object)
+    CardSheet("objects-no-descriptions", Object)
