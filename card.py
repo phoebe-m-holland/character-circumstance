@@ -27,15 +27,15 @@ class Card:
     def drawBorder(self, surface):
         context = cairo.Context(surface)
         context.rectangle(self.border/2, self.border/2,
-                          self.width - 2 * self.border,
-                          self.height - 2 * self.border)
+                          self.width - self.border,
+                          self.height - self.border)
         context.set_line_width(self.border)
         context.set_line_join(cairo.LINE_JOIN_ROUND)
         context.stroke()
 
     def drawText(self, surface, text, y_offset, size=18):
         context = cairo.Context(surface)
-        context.move_to(self.width/2, y_offset)
+        context.translate(self.width/2, y_offset)
         pangocairo_context = pangocairo.CairoContext(context)
         layout = pangocairo_context.create_layout()
         font = pango.FontDescription(self.font + " " + str(size))
@@ -67,10 +67,8 @@ class Object(Card):
             svg.render_cairo(context)
             context.translate(self.width * 4, self.height * 4)
             context.rotate(pi)
-            svg.render_cairo(context)
-            
-            
-            
+            svg.render_cairo(context)            
+    
 
 def ReadList(name, cardType):
     with open(name) as ls:
