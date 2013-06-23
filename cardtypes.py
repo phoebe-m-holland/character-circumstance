@@ -16,15 +16,16 @@ class Object(Card):
 
 class Talent(Card):
     def typeset(self, surface):
-        self.panel(surface, self.w / 32, self.h / 8, 0.9, 0.5)
-        self.panel(surface, self.h * 7 / 8, self.h - self.w / 16, 0.9, 0.5)
+        self.panel(surface, self.w / 32, self.h / 16, 1, 0.5)
+        self.panel(surface, self.h * 7 / 8, self.h * 15 / 16, 1, 0.5)
         self.renderText(surface, self.title, self.h / 16, self.w / 16, 0)
         self.renderText(surface, self.description, self.h * 7 / 8, self.w / 32, 0.1)
 
     def illustrate(self, surface):
         if self.art != None:
             illustration = Context(surface)
-            illustration.scale(self.w / art.get_dimension_data()[0])
+            sf = self.w / self.art.get_dimension_data()[2]
+            illustration.scale(sf, sf)
             self.art.render_cairo(illustration)
 
 
