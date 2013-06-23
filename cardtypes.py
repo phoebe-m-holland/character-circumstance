@@ -15,10 +15,13 @@ class Object(Card):
 
 
 class Talent(Card):
-     def typeset(self, surface):
+    def typeset(self, surface):
+        self.panel(surface, self.w / 32, self.h / 8, 0.9, 0.5)
+        self.panel(surface, self.h * 7 / 8, self.h - self.w / 16, 0.9, 0.5)
         self.renderText(surface, self.title, self.h / 16, self.w / 16, 0)
         self.renderText(surface, self.description, self.h * 7 / 8, self.w / 32, 0.1)
-     def illustrate(self, surface):
+
+    def illustrate(self, surface):
         if self.art != None:
             illustration = Context(surface)
             illustration.scale(self.w / art.get_dimension_data()[0])
