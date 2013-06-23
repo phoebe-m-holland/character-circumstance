@@ -33,4 +33,4 @@ class CardSheet:
 
 
 if __name__ == "__main__":
-    CardSheet(["Object"], 1024, 1536).outputPDF("Output.pdf", 3, 3)
+    CardSheet(["Object", "Talent"], 1024, 1536).outputPDF("Output.pdf", 3, 3)

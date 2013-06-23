@@ -40,7 +40,7 @@ class Card:
     def typeset(self, surface):
         if self.description != "":
             self.renderText(surface, self.title, self.h * 2 / 5, self.w / 16, 0)
-            self.renderText(surface, self.description, self.h / 2, self.w / 32, 0.03)
+            self.renderText(surface, self.description, self.h / 2, self.w / 32, 0.1)
         else:
             self.renderText(surface, self.title, self.h * 4 / 9, self.w / 14, 0)
 
