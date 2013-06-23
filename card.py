@@ -8,6 +8,8 @@ import rsvg
 from math import pi, sqrt
 from itertools import count
 
+RowN, ColumnN = 3, 3
+
 class Card:
     width, height = 1024, 1536
     font = "URW Palladio L, Roman"
@@ -82,17 +84,17 @@ def CardSheet(ls, cardType):
             title, description = (l.strip() for l in line.split(":"))
             cards.append(cardType(title, description))
     with open("Output/" + ls + ".pdf", 'w') as output:
-        surface = cairo.PDFSurface(output, 4 * Card.width, 4 * Card.height)
+        surface = cairo.PDFSurface(output, RowN * Card.width, ColumnN * Card.height)
         context = cairo.Context(surface)
         for i in count():
             if i < cards.__len__():
                 context.set_source_surface(cards[i].surface,
-                                           Card.width * (i % 4),
-                                           Card.height * ((i / 4) % 4))
-                context.rectangle(Card.width * (i % 4),
-                                  Card.height * ((i / 4) % 4) ,
+                                           Card.width * (i % RowN),
+                                           Card.height * ((i / RowN) % ColumnN))
+                context.rectangle(Card.width * (i % RowN),
+                                  Card.height * ((i / RowN) % ColumnN) ,
                                   Card.width, Card.height)
-                if (i > 0) and not (i % 16):
+                if (i > 0) and not (i % (RowN * ColumnN)):
                     context.show_page()
                 context.fill()
             else:
