@@ -82,7 +82,7 @@ def CardSheet(ls, cardType):
     with open("Input/" + ls + ".list") as lines:
         for line in lines:
             title, desc = (l.strip() for l in line.split(":"))
-            description = desc.replace(".", ".\n")
+            description = desc.replace(">", "\n")
             cards.append(cardType(title, description))
     with open("Output/" + ls + ".pdf", 'w') as output:
         surface = cairo.PDFSurface(output, RowN * Card.width, ColumnN * Card.height)
