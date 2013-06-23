@@ -50,14 +50,14 @@ class Card:
         else:
             self.renderText(surface, self.title, self.h * 4 / 9, self.w / 14, 0)
 
-    def renderText(self, surface, text, y_offset, size, shade):
+    def renderText(self, surface, text, y_offset, size, shade, w=(3,4)):
         origin = Context(surface)
         origin.set_source_rgb(shade, shade, shade)
-        origin.translate(self.w / 10, y_offset)
+        origin.translate(self.w * (w[1] - w[0]) / (w[1] * 2), y_offset)
         box = CairoContext(origin)
         layout = box.create_layout()
         layout.set_font_description(FontDescription(self.font + " " + str(size)))
-        layout.set_width(self.w * pango.SCALE * 5 / 6 )
+        layout.set_width(self.w * w[0] / w[1] * pango.SCALE)
         layout.set_alignment(pango.ALIGN_CENTER)
         layout.set_justify(True)
         layout.set_text(text)
