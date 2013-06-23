@@ -47,6 +47,7 @@ class Card:
 
         layout.set_width(self.width * pango.SCALE * 4 / 5 )
         layout.set_alignment(pango.ALIGN_CENTER)
+        layout.set_justify(True)
         layout.set_text(text)
         pangocontext.update_layout(layout)
         pangocontext.show_layout(layout)
