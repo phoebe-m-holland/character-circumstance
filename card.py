@@ -34,6 +34,12 @@ class Card:
         border.set_line_join(rounded)
         border.stroke()
 
+    def panel(self, surface, y, h, shade, alpha):
+        pane = Context(surface)
+        pane.rectangle(self.w / 32, y, self.w * 15 / 16, y + h)
+        pane.set_source_rgba(shade, shade, shade, alpha)
+        pane.fill()
+
     def illustrate(self, surface):
         pass
 
