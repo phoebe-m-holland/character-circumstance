@@ -14,7 +14,7 @@ class Card:
     font = "URW Palladio L, Roman"
 
     def __init__(self, title, description, width, height):
-        self.title = title.title()
+        self.title = title
         self.processDescription(description)
         self.w, self.h = width, height
         self.loadSVG()
@@ -66,7 +66,7 @@ class Card:
         try:
             self.art = SVG(file=svg_name)
         except:
-            print svg_name , " not found."
+            print "Error processing", svg_name
             self.art = None
 
 class Object(Card):
