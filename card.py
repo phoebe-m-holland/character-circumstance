@@ -21,7 +21,7 @@ class Card:
         self.drawBorder(surface)
         if description != "":
             self.drawText(surface, title, self.height / 2.5, self.width/16)
-            self.drawText(surface, description, self.height / 2, self.width/24 )
+            self.drawText(surface, description, self.height / 2, self.width/32 )
         else:
             self.drawText(surface, title, self.height / 2.25, self.width/14)
         self.drawImage(surface, self.loadSVG(im))
@@ -81,7 +81,8 @@ def CardSheet(ls, cardType):
     cards = []
     with open("Input/" + ls + ".list") as lines:
         for line in lines:
-            title, description = (l.strip() for l in line.split(":"))
+            title, desc = (l.strip() for l in line.split(":"))
+            description = desc.replace(".", ".\n")
             cards.append(cardType(title, description))
     with open("Output/" + ls + ".pdf", 'w') as output:
         surface = cairo.PDFSurface(output, RowN * Card.width, ColumnN * Card.height)
