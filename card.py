@@ -31,9 +31,9 @@ class Card:
 
     def outline(self, surface):
         border = Context(surface)
-        border.rectangle(self.w / 64, self.w / 64, self.w - self.w / 32, self.h - self.w / 32)
+        border.rectangle(self.w / 64, self.w / 64, self.w - self.w / 32, self.h - self.w / 32 - 2)
         border.set_line_width(self.w / 32)
-        border.set_source_rgb(0.05, 0.05, 0.05)
+        border.set_source_rgb(0.1, 0.1, 0.1)
         border.set_line_join(rounded)
         border.stroke()
 
