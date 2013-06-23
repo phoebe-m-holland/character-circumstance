@@ -1,107 +1,115 @@
 #!/usr/bin/env python
 
-import cairo
+from cairo import Context, PDFSurface
+from cairo import LINE_JOIN_ROUND as rounded
+from pangocairo import CairoContext
 import pango
-import pangocairo
-import rsvg
+from pango import FontDescription
+from rsvg import Handle as SVG
 
 from math import pi, sqrt
 from itertools import count
 
-RowN, ColumnN = 3, 3
-
 class Card:
-    width, height = 1024, 1536
     font = "URW Palladio L, Roman"
-    border = width / 32
 
-    def __init__(self, title, description):
-        im = "Input/" + self.prefix + title + ".svg"
-        surface = cairo.PDFSurface(None, self.width, self.height)
-        self.drawBorder(surface)
-        if description != "":
-            self.drawText(surface, title, self.height / 2.5, self.width/16)
-            self.drawText(surface, description, self.height / 2, self.width/32 )
+    def __init__(self, title, description, width, height):
+        self.title = title.title()
+        self.processDescription(description)
+        self.w, self.h = width, height
+        self.loadSVG()
+
+    def processDescription(self, text):
+        self.description = text
+
+    def outputPDF(self):
+        output = PDFSurface(None, self.w, self.h)
+        self.outline(output)
+        self.illustrate(output)
+        self.typeset(output)
+        return output
+
+    def outline(self, surface):
+        border = Context(surface)
+        border.rectangle(self.w / 64, self.w / 64, self.w - self.w / 32, self.h - self.w / 32)
+        border.set_line_width(self.w / 32)
+        border.set_source_rgb(0.05, 0.05, 0.05)
+        border.set_line_join(rounded)
+        border.stroke()
+
+    def illustrate(self, surface):
+        pass
+
+    def typeset(self, surface):
+        if self.description != "":
+            self.renderText(surface, self.title, self.h * 2 / 5, self.w / 16, 0)
+            self.renderText(surface, self.description, self.h / 2, self.w / 32, 0.03)
         else:
-            self.drawText(surface, title, self.height / 2.25, self.width/14)
-        self.drawImage(surface, self.loadSVG(im))
-        self.surface = surface
+            self.renderText(surface, self.title, self.h * 4 / 9, self.w / 14, 0)
 
-
-    def drawBorder(self, surface):
-        context = cairo.Context(surface)
-        context.rectangle(self.border/2, self.border/2,
-                          self.width - self.border,
-                          self.height - self.border)
-        context.set_line_width(self.border)
-        context.set_line_join(cairo.LINE_JOIN_ROUND)
-        context.stroke()
-
-    def drawText(self, surface, text, y_offset, size):
-        font = pango.FontDescription(self.font + " " + str(size))
-        context = cairo.Context(surface)
-        context.set_source_rgb(0, 0, 0)
-        context.translate(self.width / 10, y_offset)
-       
-        pangocontext = pangocairo.CairoContext(context)
-        layout = pangocontext.create_layout()
-        layout.set_font_description(font)
-
-        layout.set_width(self.width * pango.SCALE * 4 / 5 )
+    def renderText(self, surface, text, y_offset, size, shade):
+        origin = Context(surface)
+        origin.set_source_rgb(shade, shade, shade)
+        origin.translate(self.w / 10, y_offset)
+        box = CairoContext(origin)
+        layout = box.create_layout()
+        layout.set_font_description(FontDescription(self.font + " " + str(size)))
+        layout.set_width(self.w * pango.SCALE * 5 / 6 )
         layout.set_alignment(pango.ALIGN_CENTER)
         layout.set_justify(True)
         layout.set_text(text)
-        pangocontext.update_layout(layout)
-        pangocontext.show_layout(layout)
+        box.update_layout(layout)
+        box.show_layout(layout)
 
-    def drawImage(self, surface, svg): 
-        pass 
-
-    def loadSVG(self, svg_name):
+    def loadSVG(self):
+        svg_name = "Input/" + self.__class__.__name__ + "/" + self.title + ".svg"
         try:
-            return rsvg.Handle(file=svg_name)
+            self.art = SVG(file=svg_name)
         except:
-            print "error processing " + svg_name
-            return None
+            print svg_name , " not found."
+            self.art = None
 
 class Object(Card):
-    prefix = "Objects/"
-    def drawImage(self, surface, svg):
-        if svg != None:
-            context = cairo.Context(surface)
-            context.scale(0.6, 0.6)
-            context.translate(self.width / 6, self.height / 6)
-            svg.render_cairo(context)
-            context.translate(self.width*4/3, self.height*4/3)
-            context.rotate(pi)
-            svg.render_cairo(context)            
-    
+    def illustrate(self, surface):
+        if self.art != None:
+            illustration = Context(surface)
+            illustration.scale(0.6, 0.6)
+            illustration.translate(self.w / 6, self.h / 6)
+            self.art.render_cairo(illustration)
+            illustration.translate(self.w * 4 / 3, self.h * 4 / 3)
+            illustration.rotate(pi)
+            self.art.render_cairo(illustration)
 
-def CardSheet(ls, cardType):
+
+CardTypes = { "Object" : Object }
+
+class CardSheet:
     cards = []
-    with open("Input/" + ls + ".list") as lines:
-        for line in lines:
-            title, desc = (l.strip() for l in line.split(":"))
-            description = desc.replace(">", "\n")
-            cards.append(cardType(title, description))
-    with open("Output/" + ls + ".pdf", 'w') as output:
-        surface = cairo.PDFSurface(output, RowN * Card.width, ColumnN * Card.height)
-        context = cairo.Context(surface)
-        for i in count():
-            if i < cards.__len__():
-                context.set_source_surface(cards[i].surface,
-                                           Card.width * (i % RowN),
-                                           Card.height * ((i / RowN) % ColumnN))
-                context.rectangle(Card.width * (i % RowN),
-                                  Card.height * ((i / RowN) % ColumnN) ,
-                                  Card.width, Card.height)
-                if (i > 0) and not (i % (RowN * ColumnN)):
-                    context.show_page()
-                context.fill()
-            else:
-                break
-        surface.finish()
+    def __init__(self, cardlists, w, h):
+        self.w, self.h = w, h
+        for ls in cardlists:
+            with open("Input/" + ls + ".list") as lines:
+                for line in lines:
+                    title, desc = (l.strip() for l in line.split(":"))
+                    description = desc.replace(">", "\n")
+                    self.cards.append(CardTypes[ls](title, description, w, h))
+
+    def outputPDF(self, name, rows, columns):
+        with open(name, 'w') as output:
+            surface = PDFSurface(output, rows * self.w, columns * self.h)
+            sheet = Context(surface)
+            for i in count():
+                if i < self.cards.__len__():
+                    c, r = i % rows, (i / rows) % columns
+                    sheet.set_source_surface(self.cards[i].outputPDF(), self.w * c, self.h * r)
+                    sheet.rectangle(self.w * c, self.h * r, self.w, self.h)
+                    if (i > 0) and not (i % (rows * columns)):
+                        sheet.show_page()
+                    sheet.fill()
+                else:
+                    break
+            surface.finish()
 
 
 if __name__ == "__main__":
-    CardSheet("Objects", Object)
+    CardSheet(["Object"], 1024, 1536).outputPDF("Output.pdf", 3, 3)
