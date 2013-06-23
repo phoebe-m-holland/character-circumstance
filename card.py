@@ -79,7 +79,7 @@ class Object(Card):
 
 def CardSheet(ls, cardType):
     cards = []
-    with open("Input/Lists/" + ls + ".list") as lines:
+    with open("Input/" + ls + ".list") as lines:
         for line in lines:
             title, description = (l.strip() for l in line.split(":"))
             cards.append(cardType(title, description))
@@ -103,4 +103,4 @@ def CardSheet(ls, cardType):
 
 
 if __name__ == "__main__":
-    CardSheet("objects", Object)
+    CardSheet("Objects", Object)
