@@ -23,7 +23,7 @@ class Card:
             self.drawText(surface, title, self.height / 2.5, self.width/16)
             self.drawText(surface, description, self.height / 2, self.width/24 )
         else:
-            self.drawText(surface, title, self.height / 2.25, 34)
+            self.drawText(surface, title, self.height / 2.25, self.width/14)
         self.drawImage(surface, self.loadSVG(im))
         self.surface = surface
 
