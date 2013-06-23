@@ -7,7 +7,7 @@ class Object(Card):
         if self.art != None:
             illustration = Context(surface)
             illustration.scale(0.6, 0.6)
-            illustration.translate(self.w / 6, self.h / 6)
+            illustration.translate(self.w, self.h / 6)
             self.art.render_cairo(illustration)
             illustration.translate(self.w * 4 / 3, self.h * 4 / 3)
             illustration.rotate(pi)
@@ -15,7 +15,14 @@ class Object(Card):
 
 
 class Talent(Card):
-    pass
+     def typeset(self, surface):
+        self.renderText(surface, self.title, self.h / 16, self.w / 16, 0)
+        self.renderText(surface, self.description, self.h * 7 / 8, self.w / 32, 0.1)
+     def illustrate(self, surface):
+        if self.art != None:
+            illustration = Context(surface)
+            illustration.scale(self.w / art.get_dimension_data()[0])
+            self.art.render_cairo(illustration)
 
 
 CardTypes = { "Object" : Object, "Talent" : Talent }
