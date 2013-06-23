@@ -7,7 +7,7 @@ class Object(Card):
         if self.art != None:
             illustration = Context(surface)
             illustration.scale(0.6, 0.6)
-            illustration.translate(self.w, self.h / 6)
+            illustration.translate(self.w / 6, self.h / 6)
             self.art.render_cairo(illustration)
             illustration.translate(self.w * 4 / 3, self.h * 4 / 3)
             illustration.rotate(pi)
