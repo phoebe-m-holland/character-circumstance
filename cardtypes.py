@@ -14,5 +14,9 @@ class Object(Card):
             self.art.render_cairo(illustration)
 
 
-CardTypes = { "Object" : Object }
+class Talent(Card):
+    pass
+
+
+CardTypes = { "Object" : Object, "Talent" : Talent }
 
