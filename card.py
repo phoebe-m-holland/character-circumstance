@@ -69,10 +69,11 @@ class Card:
         box.show_layout(layout)
 
     def loadSVG(self):
-        svg_name = "Input/" + self.__class__.__name__ + "/" + self.name + ".svg"
-        try:
-            self.art = SVG(file=svg_name)
-        except:
-            print "Error processing", svg_name
-            self.art = None
+        if len(self.name) > 0:
+            svg_name = "Input/" + self.__class__.__name__ + "/" + self.name + ".svg"
+            try:
+                self.art = SVG(file=svg_name)
+            except:
+                print "Error processing", svg_name
+                self.art = None
 
