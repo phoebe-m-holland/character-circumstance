@@ -19,16 +19,13 @@ class CardSheet:
         with open(name, 'w') as output:
             surface = PDFSurface(output, rows * self.w, columns * self.h)
             sheet = Context(surface)
-            for i in count():
-                if i < self.cards.__len__():
-                    c, r = i % rows, (i / rows) % columns
-                    sheet.set_source_surface(self.cards[i].outputPDF(), self.w * c, self.h * r)
-                    sheet.rectangle(self.w * c, self.h * r, self.w, self.h)
-                    if (i > 0) and not (i % (rows * columns)):
-                        sheet.show_page()
-                    sheet.fill()
-                else:
-                    break
+            for i in range(len(self.cards)):
+                c, r = i % rows, (i / rows) % columns
+                sheet.set_source_surface(self.cards[i].outputPDF(), self.w * c, self.h * r)
+                sheet.rectangle(self.w * c, self.h * r, self.w, self.h)
+                if (i > 0) and not (i % (rows * columns)):
+                    sheet.show_page()
+                sheet.fill()
             surface.finish()
 
 

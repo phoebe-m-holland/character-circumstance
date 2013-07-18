@@ -11,7 +11,8 @@ class Card:
     font = "Quicksand Book"
 
     def __init__(self, title, description, width, height):
-        self.title = title
+        self.title = title.upper()
+        self.name = title
         self.processDescription(description)
         self.w, self.h = width, height
         self.loadSVG()
@@ -68,7 +69,7 @@ class Card:
         box.show_layout(layout)
 
     def loadSVG(self):
-        svg_name = "Input/" + self.__class__.__name__ + "/" + self.title + ".svg"
+        svg_name = "Input/" + self.__class__.__name__ + "/" + self.name + ".svg"
         try:
             self.art = SVG(file=svg_name)
         except:
