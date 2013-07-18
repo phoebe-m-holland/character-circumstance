@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from cardtypes import CardTypes
+from cardtypes import Card, CardTypes
 from cairo import PDFSurface, Context
 from itertools import count
 
@@ -14,6 +14,7 @@ class CardSheet:
                     title, desc = (l.strip() for l in line.split(":"))
                     description = desc.replace(">", "\n")
                     self.cards.append(CardTypes[ls](title, description, w, h))
+        self.cards.append(Card("", "", w, h))
 
     def outputPDF(self, name, rows, columns):
         with open(name, 'w') as output:
