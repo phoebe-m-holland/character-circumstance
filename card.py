@@ -5,7 +5,7 @@ from pangocairo import CairoContext
 import pango
 from pango import FontDescription
 from rsvg import Handle as SVG
-
+from StringIO import StringIO
 
 class Card:
     font = "URW Palladio L, Roman"
