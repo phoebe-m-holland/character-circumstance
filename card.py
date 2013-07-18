@@ -52,7 +52,6 @@ class Card:
 
     def renderText(self, surface, text, y_offset, size, shade, w=(3,4)):
         origin = Context(surface)
-        origin.set_source_rgb(shade, shade, shade)
         origin.translate(self.w * (w[1] - w[0]) / (w[1] * 2), y_offset)
         box = CairoContext(origin)
         layout = box.create_layout()
@@ -61,6 +60,10 @@ class Card:
         layout.set_alignment(pango.ALIGN_CENTER)
         layout.set_justify(True)
         layout.set_text(text)
+        origin.set_source_rgba(1, 1, 1, 0.5)
+        origin.rectangle(*layout.get_pixel_extents()[1])
+        origin.fill()
+        origin.set_source_rgb(shade, shade, shade)
         box.update_layout(layout)
         box.show_layout(layout)
 
