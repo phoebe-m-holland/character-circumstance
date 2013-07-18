@@ -12,9 +12,9 @@
    id="svg3948"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   width="600"
-   height="900"
-   sodipodi:docname="Jumper.jpg">
+   width="99.988312"
+   height="150"
+   sodipodi:docname="Jumper.svg">
   <metadata
      id="metadata3954">
     <rdf:RDF>
@@ -23,7 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -39,19 +39,23 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1275"
-     inkscape:window-height="756"
+     inkscape:window-height="708"
      id="namedview3950"
      showgrid="false"
-     inkscape:zoom="0.32593203"
-     inkscape:cx="515.39659"
-     inkscape:cy="329.24762"
+     inkscape:zoom="0.67350798"
+     inkscape:cx="-19.698606"
+     inkscape:cy="91.803186"
      inkscape:window-x="2"
-     inkscape:window-y="22"
+     inkscape:window-y="27"
      inkscape:window-maximized="0"
-     inkscape:current-layer="svg3948" />
+     inkscape:current-layer="svg3948"
+     fit-margin-top="0"
+     fit-margin-left="22.73"
+     fit-margin-right="22.73"
+     fit-margin-bottom="0" />
   <g
      id="g4544"
-     transform="translate(-39.050847,-0.1694915)">
+     transform="matrix(0.16682382,0,0,0.16682382,-10.285477,-0.13033111)">
     <path
        sodipodi:nodetypes="cccccccccccscccccscccc"
        inkscape:connector-curvature="0"
@@ -72,7 +76,7 @@
        style="fill:#000000;fill-opacity:1;stroke:none" />
   </g>
   <g
-     transform="matrix(-1,0,0,-1,683.62332,900.54519)"
+     transform="matrix(-0.16682382,0,0,-0.16682382,110.27379,150.13033)"
      id="g4544-4">
     <path
        sodipodi:nodetypes="cccccccccccscccccscccc"
