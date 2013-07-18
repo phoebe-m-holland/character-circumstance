@@ -17,8 +17,8 @@ class Object(Card):
 class Talent(Card):
     def typeset(self, surface):
         self.renderText(surface
-                , self.title, self.h / 16, self.w / 16, 0.2)
-        self.renderText(surface, self.description, self.h * 7 / 8, self.w / 32, 0.3, w=(5,9))
+                , self.title, self.h / 16, self.w / 16, 0)
+        self.renderText(surface, self.description, self.h * 7 / 8, self.w / 32, 0.1, w=(5,9))
 
     def illustrate(self, surface):
         if self.art != None:
