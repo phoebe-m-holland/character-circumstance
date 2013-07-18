@@ -35,12 +35,6 @@ class Card:
         border.set_line_join(rounded)
         border.stroke()
 
-    def panel(self, surface, y, h, shade, alpha):
-        pane = Context(surface)
-        pane.rectangle(self.w / 32, y, self.w * 15 / 16, y + h)
-        pane.set_source_rgba(shade, shade, shade, alpha)
-        pane.fill()
-
     def illustrate(self, surface):
         pass
 
@@ -61,7 +55,7 @@ class Card:
         layout.set_alignment(pango.ALIGN_CENTER)
         layout.set_justify(True)
         layout.set_text(text)
-        origin.set_source_rgba(1, 1, 1, 0.5)
+        origin.set_source_rgba(1, 1, 1, 0.7)
         origin.rectangle(*layout.get_pixel_extents()[1])
         origin.fill()
         origin.set_source_rgb(shade, shade, shade)
