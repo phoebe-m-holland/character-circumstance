@@ -11,14 +11,14 @@ class Card:
     font = "Quicksand Book"
 
     def __init__(self, title, description, width, height):
-        self.title = title.upper()
-        self.name = title
-        self.processDescription(description)
+        self.description = description
+        self.processName(title)
         self.w, self.h = width, height
         self.loadSVG()
 
-    def processDescription(self, text):
-        self.description = text
+    def processName(self, text):
+        self.title = text.upper()
+        self.name = text
 
     def outputPDF(self):
         output = PDFSurface(None, self.w, self.h)
@@ -40,21 +40,37 @@ class Card:
 
     def typeset(self, surface):
         if self.description != "":
-            self.renderText(surface, self.title, self.h * 2 / 5, self.w / 16, 0)
+            self.renderText(surface, self.title, self.h * 2 / 5, self.w / 16, 0, wrap=False)
             self.renderText(surface, self.description, self.h / 2, self.w / 32, 0.1)
         else:
-            self.renderText(surface, self.title, self.h * 4 / 9, self.w / 14, 0)
+            self.renderText(surface, self.title, self.h * 4 / 9, self.w / 14, 0, wrap=False)
 
-    def renderText(self, surface, text, y_offset, size, shade, w=(3,4)):
+    def renderText(self, surface, text, y_offset, size, shade, w=(5,9), wrap=True):
+        if len(text) < 1:
+            return
+        
+        def setdesc(l, size):
+            l.set_font_description(FontDescription(self.font + " " + str(size)))
+        
         origin = Context(surface)
         origin.translate(self.w * (w[1] - w[0]) / (w[1] * 2), y_offset)
         box = CairoContext(origin)
         layout = box.create_layout()
-        layout.set_font_description(FontDescription(self.font + " " + str(size)))
-        layout.set_width(self.w * w[0] / w[1] * pango.SCALE)
+        setdesc(layout, size)
+        width = self.w * w[0] / w[1]
+        if wrap:
+            layout.set_width(width * pango.SCALE)
+        else:
+            layout.set_width(-1)
         layout.set_alignment(pango.ALIGN_CENTER)
         layout.set_justify(True)
         layout.set_text(text)
+
+        wi, n = layout.get_pixel_size()
+        if wi > width:
+            s = size * width / wi
+            setdesc(layout, s)
+        layout.set_width(width * pango.SCALE)
         origin.set_source_rgba(1, 1, 1, 0.7)
         origin.rectangle(*layout.get_pixel_extents()[1])
         origin.fill()
