@@ -12,9 +12,9 @@
    id="svg3180"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   width="605"
-   height="606"
-   sodipodi:docname="Meditant.jpg">
+   width="99.988998"
+   height="149.99936"
+   sodipodi:docname="Meditant.svg">
   <metadata
      id="metadata3186">
     <rdf:RDF>
@@ -23,7 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -39,19 +39,23 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1276"
-     inkscape:window-height="750"
+     inkscape:window-height="708"
      id="namedview3182"
      showgrid="false"
-     inkscape:zoom="1.1014997"
-     inkscape:cx="299.17068"
-     inkscape:cy="369.8434"
-     inkscape:window-x="-1"
-     inkscape:window-y="22"
+     inkscape:zoom="2.2761459"
+     inkscape:cx="-32.189181"
+     inkscape:cy="133.13619"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="0"
-     inkscape:current-layer="svg3180" />
+     inkscape:current-layer="svg3180"
+     fit-margin-top="30"
+     fit-margin-left="27.96"
+     fit-margin-right="27.96"
+     fit-margin-bottom="30" />
   <g
      id="g4218"
-     transform="translate(-10.894238,-23.604183)">
+     transform="matrix(0.18311829,0,0,0.18311829,-7.5935605,16.786877)">
     <path
        inkscape:connector-curvature="0"
        id="path4090"
