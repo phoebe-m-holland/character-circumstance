@@ -8,7 +8,7 @@ from rsvg import Handle as SVG
 from StringIO import StringIO
 
 class Card:
-    font = "URW Palladio L, Roman"
+    font = "Quicksand Book"
 
     def __init__(self, title, description, width, height):
         self.title = title
