@@ -9,12 +9,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="600"
-   height="900"
+   width="100.001"
+   height="149.99937"
    id="svg4299"
    version="1.1"
-   inkscape:version="0.48.2 r9819"
-   sodipodi:docname="New document 13">
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="Bard.svg">
   <defs
      id="defs4301" />
   <sodipodi:namedview
@@ -24,17 +24,21 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="384.81344"
-     inkscape:cy="460.47306"
+     inkscape:zoom="1.4464844"
+     inkscape:cx="0.01372595"
+     inkscape:cy="74.375265"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1280"
-     inkscape:window-height="752"
-     inkscape:window-x="-1"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0" />
+     inkscape:window-height="708"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     fit-margin-top="40"
+     fit-margin-left="25.47"
+     fit-margin-right="25.47"
+     fit-margin-bottom="40" />
   <metadata
      id="metadata4304">
     <rdf:RDF>
@@ -43,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -51,10 +55,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-152.36218)">
+     transform="translate(-262.43406,-516.26501)">
     <g
        id="g6026"
-       transform="translate(-8.5714286,131.42857)">
+       transform="matrix(0.11601426,0,0,0.11601426,275.19329,537.91715)">
       <g
          id="g5438">
         <path
