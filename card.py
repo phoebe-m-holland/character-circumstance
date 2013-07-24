@@ -45,16 +45,20 @@ class Card:
         else:
             self.renderText(surface, self.title, self.h * 4 / 9, self.w / 14, 0, wrap=False)
 
-    def renderText(self, surface, text, y_offset, size, shade, w=(2,3), wrap=True):
+    def renderText(self, surface,
+                   text, y_offset, size,
+                   shade, w=(2,3), wrap=True):
         if len(text) < 1:
             return
-        
         def setdesc(l, size):
-            l.set_font_description(FontDescription(self.font + " " + str(size)))
-        
+            l.set_font_description(
+                    FontDescription(
+                        self.font + " " + str(size)))
         origin = Context(surface)
-        origin.translate(self.w * (w[1] - w[0]) / (w[1] * 2), y_offset)
+        origin.translate(self.w * (w[1] - w[0]) /
+                         (w[1] * 2), y_offset)
         box = CairoContext(origin)
+    #  Start laying out text 
         layout = box.create_layout()
         setdesc(layout, size)
         width = self.w * w[0] / w[1]
@@ -63,17 +67,18 @@ class Card:
         else:
             layout.set_width(-1)
         layout.set_alignment(pango.ALIGN_CENTER)
-#        layout.set_justify(True)
         layout.set_text(text)
-
+    #   Resize text to make sure it doesn't exceed width.
         wi, n = layout.get_pixel_size()
         if wi > width:
             s = size * width / wi
             setdesc(layout, s)
         layout.set_width(width * pango.SCALE)
+    #   Draw a transparent pane behind the text
         origin.set_source_rgba(1, 1, 1, 0.7)
         origin.rectangle(*layout.get_pixel_extents()[1])
         origin.fill()
+    #   Draw text
         origin.set_source_rgb(shade, shade, shade)
         box.update_layout(layout)
         box.show_layout(layout)
