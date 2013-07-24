@@ -45,7 +45,7 @@ class Card:
         else:
             self.renderText(surface, self.title, self.h * 4 / 9, self.w / 14, 0, wrap=False)
 
-    def renderText(self, surface, text, y_offset, size, shade, w=(5,9), wrap=True):
+    def renderText(self, surface, text, y_offset, size, shade, w=(2,3), wrap=True):
         if len(text) < 1:
             return
         
@@ -63,7 +63,7 @@ class Card:
         else:
             layout.set_width(-1)
         layout.set_alignment(pango.ALIGN_CENTER)
-        layout.set_justify(True)
+#        layout.set_justify(True)
         layout.set_text(text)
 
         wi, n = layout.get_pixel_size()
