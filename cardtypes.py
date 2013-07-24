@@ -38,10 +38,10 @@ class Talent(Card):
     def illustrate(self, surface):
         if self.suit != None:
             suits = Context(surface)
-            suits.scale(0.6, 0.6)
-            suits.translate(self.w / 6, self.h / 6)
+            suits.scale(0.5, 0.5)
+            suits.translate(self.w / 8, self.h / 12)
             self.suit.render_cairo(suits)
-            suits.translate(self.w * 4 / 3, self.h * 4 / 3)
+            suits.translate(self.w * 7 / 4, self.h * 11 / 6)
             suits.rotate(pi)
             self.suit.render_cairo(suits)
         if self.art != None:
