@@ -5,19 +5,20 @@ from pangocairo import CairoContext
 import pango
 from pango import FontDescription
 from rsvg import Handle as SVG
-
+from StringIO import StringIO
 
 class Card:
-    font = "URW Palladio L, Roman"
+    font = "Quicksand Book"
 
     def __init__(self, title, description, width, height):
-        self.title = title
-        self.processDescription(description)
+        self.description = description
+        self.processName(title)
         self.w, self.h = width, height
         self.loadSVG()
 
-    def processDescription(self, text):
-        self.description = text
+    def processName(self, text):
+        self.title = text.upper()
+        self.name = text
 
     def outputPDF(self):
         output = PDFSurface(None, self.w, self.h)
@@ -34,41 +35,60 @@ class Card:
         border.set_line_join(rounded)
         border.stroke()
 
-    def panel(self, surface, y, h, shade, alpha):
-        pane = Context(surface)
-        pane.rectangle(self.w / 32, y, self.w * 15 / 16, y + h)
-        pane.set_source_rgba(shade, shade, shade, alpha)
-        pane.fill()
-
     def illustrate(self, surface):
         pass
 
     def typeset(self, surface):
         if self.description != "":
-            self.renderText(surface, self.title, self.h * 2 / 5, self.w / 16, 0)
+            self.renderText(surface, self.title, self.h * 2 / 5, self.w / 16, 0, wrap=False)
             self.renderText(surface, self.description, self.h / 2, self.w / 32, 0.1)
         else:
-            self.renderText(surface, self.title, self.h * 4 / 9, self.w / 14, 0)
+            self.renderText(surface, self.title, self.h * 4 / 9, self.w / 14, 0, wrap=False)
 
-    def renderText(self, surface, text, y_offset, size, shade):
+    def renderText(self, surface,
+                   text, y_offset, size,
+                   shade, w=(2,3), wrap=True):
+        if len(text) < 1:
+            return
+        def setdesc(l, size):
+            l.set_font_description(
+                    FontDescription(
+                        self.font + " " + str(size)))
         origin = Context(surface)
-        origin.set_source_rgb(shade, shade, shade)
-        origin.translate(self.w / 10, y_offset)
+        origin.translate(self.w * (w[1] - w[0]) /
+                         (w[1] * 2), y_offset)
         box = CairoContext(origin)
+    #  Start laying out text 
         layout = box.create_layout()
-        layout.set_font_description(FontDescription(self.font + " " + str(size)))
-        layout.set_width(self.w * pango.SCALE * 5 / 6 )
+        setdesc(layout, size)
+        width = self.w * w[0] / w[1]
+        if wrap:
+            layout.set_width(width * pango.SCALE)
+        else:
+            layout.set_width(-1)
         layout.set_alignment(pango.ALIGN_CENTER)
-        layout.set_justify(True)
         layout.set_text(text)
+    #   Resize text to make sure it doesn't exceed width.
+        wi, n = layout.get_pixel_size()
+        if wi > width:
+            s = size * width / wi
+            setdesc(layout, s)
+        layout.set_width(width * pango.SCALE)
+    #   Draw a transparent pane behind the text
+        origin.set_source_rgba(1, 1, 1, 0.7)
+        origin.rectangle(*layout.get_pixel_extents()[1])
+        origin.fill()
+    #   Draw text
+        origin.set_source_rgb(shade, shade, shade)
         box.update_layout(layout)
         box.show_layout(layout)
 
     def loadSVG(self):
-        svg_name = "Input/" + self.__class__.__name__ + "/" + self.title + ".svg"
-        try:
-            self.art = SVG(file=svg_name)
-        except:
-            print "Error processing", svg_name
-            self.art = None
+        if len(self.name) > 0:
+            svg_name = "Input/" + self.__class__.__name__ + "/" + self.name + ".svg"
+            try:
+                self.art = SVG(file=svg_name)
+            except:
+                print "Error processing", svg_name
+                self.art = None
 
